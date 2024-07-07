@@ -1,0 +1,13 @@
+{% extends "app/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <br><br><h2>MY PORTFOLIO LIST</h2><br>
+    <table class="center">
+        {% for pfl in user.portfolio_set.all %}
+            <tr>
+                <td><h3><a href="{% url 'pfl-detail' pfl.id %}">{{pfl.name}}</a><h3></td>
+                <td><button class="delete" onclick="window.location.href='/pfl-delete/pk={{pfl.id}}' ">Delete</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
