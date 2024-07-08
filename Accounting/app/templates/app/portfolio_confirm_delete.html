@@ -1,0 +1,10 @@
+{% extends 'app/base.html' %} 
+{% block title %}Delete Confirmation{% endblock %}
+{% block content %}
+    <br><br><h2>Delete Confirmation</h2><br>
+    <form class="opt" method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{object}}"?</p>
+        <input type="submit" value="Confirm">
+    </form>
+{% endblock %}
