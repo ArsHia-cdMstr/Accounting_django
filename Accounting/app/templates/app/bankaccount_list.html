@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/bankaccounts_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Bank Accounts</h2>
+  <ul class="bank-account-list">
+    {% for account in object_list %}
+      <li>{{ account.account_type }}: {{ account.balance }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'bankaccount-create' %}" class="create-account-link">Create New Account</a>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/check_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Create Check</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_bank_account">Bank Account:</label>
+        {{ form.bank_account }}
+        <label for="id_customer">Customer:</label>
+        {{ form.customer }}
+        <label for="id_amount">Amount:</label>
+        {{ form.amount }}
+        <label for="id_date">Date:</label>
+        {{ form.date }}
+        <button type="submit">Save</button>
+    </form>
+</div>
+{% endblock %}

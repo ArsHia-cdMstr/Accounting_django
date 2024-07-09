@@ -1,0 +1,24 @@
+/* customer_list.css */
+
+/* Style for customer list items */
+.list-group {
+  margin-top: 20px;
+}
+
+.list-group-item {
+  background-color: #f8f9fa; /* Light gray background for list items */
+  border: 1px solid #dee2e6; /* Gray border */
+  margin-bottom: 10px; /* Add margin bottom between list items */
+  padding: 10px; /* Add padding to list items */
+}
+
+/* Style for Create New Customer button */
+.btn-primary {
+  background-color: #007bff; /* Blue color for primary button */
+  border-color: #007bff; /* Blue border color */
+}
+
+.btn-primary:hover {
+  background-color: #0069d9; /* Darker blue color on hover */
+  border-color: #0062cc; /* Darker blue border color on hover */
+}

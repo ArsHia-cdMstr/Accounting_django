@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/product_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Products</h2>
+  <ul class="list-group">
+    {% for product in object_list %}
+    <li class="list-group-item">
+      <span class="product-name">{{ product.name }}</span>
+      <span class="product-price">Price: ${{ product.price }}</span>
+      <span class="product-quantity">Quantity: {{ product.quantity }}</span>
+    </li>
+    {% empty %}
+    <li class="list-group-item">No products available</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'product-create' %}" class="btn btn-primary mt-3">Add Product</a>
+</div>
+{% endblock %}

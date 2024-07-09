@@ -1,0 +1,58 @@
+/* bankaccounts_list.css */
+
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* List Styles */
+.bank-account-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.bank-account-list li {
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #555;
+}
+
+.bank-account-list li:hover {
+    background-color: #e9ecef;
+}
+
+/* Link Styles */
+.create-account-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.create-account-link:hover {
+    background-color: #0056b3;
+}

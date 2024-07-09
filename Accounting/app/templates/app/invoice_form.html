@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Create New Invoice</h2>
+  <form method="post">
+    {% csrf_token %}
+
+    <label for="id_invoice_type">Invoice Type:</label>
+    {{ form.invoice_type }}
+    <br>
+
+    <label for="id_customer">Customer:</label>
+    {{ form.customer }}
+    <br>
+
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

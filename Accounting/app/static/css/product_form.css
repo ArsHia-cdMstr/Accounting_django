@@ -1,0 +1,25 @@
+/* Center the form on the page */
+.container {
+  margin-top: 50px; /* Add space from the top */
+}
+
+/* Style for form elements */
+.form-group {
+  margin-bottom: 20px; /* Add space between form groups */
+}
+
+.form-control {
+  width: 100%; /* Full width for form controls */
+}
+
+/* Style for Save button */
+.btn-primary {
+  margin-top: 20px; /* Add space above the button */
+  background-color: #007bff; /* Blue color for primary button */
+  border-color: #007bff; /* Blue border color */
+}
+
+.btn-primary:hover {
+  background-color: #0069d9; /* Darker blue color on hover */
+  border-color: #0062cc; /* Darker blue border color on hover */
+}
