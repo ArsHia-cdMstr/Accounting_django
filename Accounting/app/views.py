@@ -116,7 +116,7 @@ class ProductListView(LoginRequiredMixin, ListView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ['name', 'price', 'quantity']
+    fields = ['name', 'price']
     template_name = 'app/product_form.html'
     success_url = reverse_lazy('product-list')
 
