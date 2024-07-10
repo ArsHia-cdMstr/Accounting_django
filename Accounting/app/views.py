@@ -91,6 +91,9 @@ class CustomerListView(LoginRequiredMixin, ListView):
     model = Customer
     template_name = 'app/customer_list.html'
 
+    def get_queryset(self):
+        return Customer.objects.filter(user=self.request.user)
+
 
 class CustomerCreateView(LoginRequiredMixin, CreateView):
     model = Customer
@@ -98,10 +101,17 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
     template_name = 'app/customer_form.html'
     success_url = reverse_lazy('customer-list')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = 'app/product_list.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(user=self.request.user)
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -110,17 +120,27 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'app/product_form.html'
     success_url = reverse_lazy('product-list')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class InvoiceListView(LoginRequiredMixin, ListView):
     model = Invoice
     template_name = 'app/invoice_list.html'
     context_object_name = 'invoices'  # نام متغیری که در template قابل دسترس است
 
+    def get_queryset(self):
+        return BankAccount.objects.filter(user=self.request.user)
 class InvoiceCreateView(LoginRequiredMixin, CreateView):
     model = Invoice
     fields = ['invoice_type', 'customer']
     template_name = 'app/invoice_form.html'
     success_url = reverse_lazy('invoice-list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class InvoiceItemCreateView(LoginRequiredMixin, CreateView):
@@ -129,10 +149,17 @@ class InvoiceItemCreateView(LoginRequiredMixin, CreateView):
     template_name = 'app/invoiceitem_form.html'
     success_url = reverse_lazy('invoice-list')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class CheckListView(LoginRequiredMixin, ListView):
     model = Check
     template_name = 'app/check_list.html'
+
+    def get_queryset(self):
+        return Check.objects.filter(user=self.request.user)
 
 
 class CheckCreateView(LoginRequiredMixin, CreateView):
@@ -140,3 +167,7 @@ class CheckCreateView(LoginRequiredMixin, CreateView):
     fields = ['bank_account', 'customer', 'amount', 'date']
     template_name = 'app/check_form.html'
     success_url = reverse_lazy('check-list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)

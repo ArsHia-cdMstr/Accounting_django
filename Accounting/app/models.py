@@ -49,6 +49,7 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
@@ -63,6 +64,7 @@ class Invoice(models.Model):
         ('sale', 'Sale'),
     )
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     invoice_type = models.CharField(max_length=10, choices=INVOICE_TYPES)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
@@ -81,6 +83,8 @@ class InvoiceItem(models.Model):
 
 
 class Check(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     bank_account = models.ForeignKey(BankAccount, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
