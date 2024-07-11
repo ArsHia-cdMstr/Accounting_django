@@ -18,7 +18,6 @@ from .forms import BankAccountForm
 from django.contrib import messages
 
 
-
 class PortfolioCreate(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'app/portfolio_create_form.html')
@@ -97,7 +96,6 @@ class BankAccountCreateView(LoginRequiredMixin, CreateView):
     def form_invalid(self, form):
         messages.error(self.request, 'You cannot have more than one account with type "store".')
         return self.render_to_response(self.get_context_data(form=form))
-
 
 
 class CustomerListView(LoginRequiredMixin, ListView):

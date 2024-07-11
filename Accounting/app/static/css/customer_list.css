@@ -10,6 +10,16 @@
   border: 1px solid #dee2e6; /* Gray border */
   margin-bottom: 10px; /* Add margin bottom between list items */
   padding: 10px; /* Add padding to list items */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef;
+    transform: scale(1.02);
+}
+
+.list-group-item:active {
+    background-color: #d3d3d3;
 }
 
 /* Style for Create New Customer button */

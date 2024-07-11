@@ -1,3 +1,5 @@
+/* bankaccounts_list.css */
+
 /* General Styles */
 body, html {
     margin: 0;
@@ -20,12 +22,12 @@ h2 {
 }
 
 /* List Styles */
-.bank-account-list {
+.list-group {
     list-style-type: none;
     padding: 0;
 }
 
-.bank-account-list li {
+.list-group-item {
     background-color: #f8f9fa;
     margin-bottom: 10px;
     padding: 15px;
@@ -33,21 +35,24 @@ h2 {
     border-radius: 5px;
     font-size: 18px;
     color: #555;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.bank-account-list li:hover {
-    background-color: #e9ecef;
-}
-
-/* Special Store Account Style */
-.bank-account-list .store-account {
+.list-group-item-success {
     background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef;
+    transform: scale(1.02);
+}
+
+.list-group-item:active {
+    background-color: #d3d3d3;
 }
 
 /* Link Styles */
-.create-account-link {
+.btn {
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
@@ -58,6 +63,6 @@ h2 {
     text-align: center;
 }
 
-.create-account-link:hover {
+.btn:hover {
     background-color: #0056b3;
 }

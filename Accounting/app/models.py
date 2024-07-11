@@ -37,6 +37,15 @@ class BankAccount(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPES)
     balance = models.DecimalField(max_digits=10, decimal_places=2)
+    account_number = models.PositiveIntegerField(unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            super().save(*args, **kwargs)
+            self.account_number = self.id + 1000
+            self.save(update_fields=['account_number'])
+        else:
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.username} - {self.account_type}"
