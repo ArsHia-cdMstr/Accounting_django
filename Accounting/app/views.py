@@ -139,10 +139,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 class InvoiceListView(LoginRequiredMixin, ListView):
     model = Invoice
     template_name = 'app/invoice_list.html'
-    context_object_name = 'invoices'  # نام متغیری که در template قابل دسترس است
-
-    def get_queryset(self):
-        return BankAccount.objects.filter(user=self.request.user)
+    context_object_name = 'invoices'
 
 
 class InvoiceCreateView(LoginRequiredMixin, CreateView):
@@ -156,15 +153,24 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class InvoiceDetailView(LoginRequiredMixin, DetailView):
+    model = Invoice
+    template_name = 'app/invoice_detail.html'
+    context_object_name = 'invoice'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['items'] = self.object.invoiceitem_set.all()
+        return context
+
+
 class InvoiceItemCreateView(LoginRequiredMixin, CreateView):
     model = InvoiceItem
     fields = ['invoice', 'product', 'quantity']
     template_name = 'app/invoiceitem_form.html'
-    success_url = reverse_lazy('invoice-list')
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy('invoice-detail', kwargs={'pk': self.object.invoice.pk})
 
 
 class CheckListView(LoginRequiredMixin, ListView):

@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/invoice_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center">Invoices</h2>
+  <div class="text-right mb-3">
+    <a href="{% url 'invoice-create' %}" class="btn btn-primary">Create Invoice</a>
+  </div>
+  <ul class="list-group">
+    {% for invoice in invoices %}
+        <a href="{% url 'invoice-detail' invoice.id %}">
+            <li class="list-group-item">
+                <strong>Invoice Number:</strong> {{ invoice.invoice_number }}<br>
+                <strong>Customer:</strong> {{ invoice.customer.name }}<br>
+                <strong>Type:</strong> {{ invoice.invoice_type|capfirst }}<br>
+                <strong>Date:</strong> {{ invoice.date }}
+            </li>
+        </a>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

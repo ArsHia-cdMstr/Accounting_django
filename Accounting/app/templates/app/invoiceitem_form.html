@@ -1,0 +1,31 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/invoiceitem_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="form-container">
+    <h2 class="text-center">Add Invoice Item</h2>
+    <form method="post" class="mt-4">
+      {% csrf_token %}
+      <div class="form-group mb-3">
+        <label for="id_invoice" class="form-label">Invoice:</label>
+        {{ form.invoice|add_class:"form-control" }}
+      </div>
+      <div class="form-group mb-3">
+        <label for="id_product" class="form-label">Product:</label>
+        {{ form.product|add_class:"form-control" }}
+      </div>
+      <div class="form-group mb-3">
+        <label for="id_quantity" class="form-label">Quantity:</label>
+        {{ form.quantity|add_class:"form-control" }}
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Save</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -80,6 +80,15 @@ class Invoice(models.Model):
     invoice_type = models.CharField(max_length=10, choices=INVOICE_TYPES)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
+    invoice_number = models.PositiveIntegerField(unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            super().save(*args, **kwargs)
+            self.invoice_number = self.id + 1000
+            self.save(update_fields=['invoice_number'])
+        else:
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.customer.name} - {self.invoice_type} - {self.date}"

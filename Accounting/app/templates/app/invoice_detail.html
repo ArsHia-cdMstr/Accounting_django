@@ -1,0 +1,40 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/invoice_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header text-center">
+      <h2>Invoice Details</h2>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-4 font-weight-bold">Invoice Number:</div>
+        <div class="col-md-8">{{ invoice.invoice_number }}</div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4 font-weight-bold">Customer:</div>
+        <div class="col-md-8">{{ invoice.customer.name }}</div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4 font-weight-bold">Date:</div>
+        <div class="col-md-8">{{ invoice.date }}</div>
+      </div>
+      <h4 class="mt-4">Items</h4>
+      <ul class="list-group">
+        {% for item in items %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ item.product.name }}</span>
+            <span>Quantity: {{ item.quantity }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'invoiceitem-create' %}?invoice={{ invoice.id }}" class="btn btn-secondary mt-3">Add Item</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

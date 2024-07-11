@@ -1,0 +1,97 @@
+/* invoice_detail.css */
+
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Card Styles */
+.card {
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #007bff; /* Standard Bootstrap blue */
+    background-color: #0056b3; /* Fallback color for better compatibility */
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 15px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body .row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-body .font-weight-bold {
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+}
+
+.card-body .col-md-8 {
+    flex: 1;
+    color: #555;
+}
+
+.card-body h4 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #007bff;
+}
+
+.card-body .list-group {
+    margin-top: 10px;
+}
+
+.card-body .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #555;
+    transition: background-color 0.3s ease;
+}
+
+.card-body .list-group-item:hover {
+    background-color: #e9ecef;
+}
+
+/* Button Styles */
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.card {
+    background-color: thistle;
+}
