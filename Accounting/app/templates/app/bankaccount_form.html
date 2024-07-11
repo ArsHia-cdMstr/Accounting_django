@@ -12,6 +12,13 @@
     <h2 class="text-center">Create Bank Account</h2>
     <form method="post" class="mt-4">
       {% csrf_token %}
+      {% if messages %}
+        <div class="alert alert-danger" role="alert">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
+      {% endif %}
       <div class="form-group mb-3">
         <label for="id_account_type" class="form-label">Account Type:</label>
         {{ form.account_type|add_class:"form-control" }}
@@ -19,6 +26,10 @@
       <div class="form-group mb-3">
         <label for="id_balance" class="form-label">Balance:</label>
         {{ form.balance|add_class:"form-control" }}
+      </div>
+      <div class="form-group mb-3">
+        <label for="id_bank_name" class="form-label">Bank Name:</label>
+        {{ form.bank_name|add_class:"form-control" }}
       </div>
       <button type="submit" class="btn btn-primary btn-block">Save</button>
     </form>

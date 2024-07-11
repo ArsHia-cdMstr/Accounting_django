@@ -10,7 +10,9 @@
   <h2>Bank Accounts</h2>
   <ul class="bank-account-list">
     {% for account in object_list %}
-      <li>{{ account.account_type }}: {{ account.balance }}</li>
+      <li class="{% if account.account_type == 'store' %}store-account{% endif %}">
+        {{ account.account_type }}: {{ account.balance }}
+      </li>
     {% endfor %}
   </ul>
   <a href="{% url 'bankaccount-create' %}" class="create-account-link">Create New Account</a>

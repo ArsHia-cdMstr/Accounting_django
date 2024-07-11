@@ -14,6 +14,9 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import BankAccount, Customer, Product, Invoice, InvoiceItem, Check, Portfolio
+from .forms import BankAccountForm
+from django.contrib import messages
+
 
 
 class PortfolioCreate(LoginRequiredMixin, View):
@@ -78,13 +81,23 @@ class BankAccountListView(LoginRequiredMixin, ListView):
 
 class BankAccountCreateView(LoginRequiredMixin, CreateView):
     model = BankAccount
-    fields = ['account_type', 'balance']
+    form_class = BankAccountForm
     template_name = 'app/bankaccount_form.html'
     success_url = reverse_lazy('bankaccount-list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'You cannot have more than one account with type "store".')
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 
 class CustomerListView(LoginRequiredMixin, ListView):
@@ -132,6 +145,8 @@ class InvoiceListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return BankAccount.objects.filter(user=self.request.user)
+
+
 class InvoiceCreateView(LoginRequiredMixin, CreateView):
     model = Invoice
     fields = ['invoice_type', 'customer']
