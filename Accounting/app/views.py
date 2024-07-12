@@ -17,6 +17,7 @@ from .models import BankAccount, Customer, Product, Invoice, InvoiceItem, Check,
 from .forms import BankAccountForm
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+from .logic import InvoiceProcessor
 
 
 class PortfolioCreate(LoginRequiredMixin, View):
@@ -177,26 +178,6 @@ class InvoiceItemCreateView(CreateView):
         form.instance.invoice = invoice
         response = super().form_valid(form)
 
-        # Decrease product quantity if invoice type is 'sale'
-        # Increase product quantity if invoice type is 'purchase'
-        product = form.instance.product
-
-        if invoice.invoice_type == 'sale':
-            product.quantity -= form.instance.quantity
-        elif invoice.invoice_type == 'purchase':
-            product.quantity += form.instance.quantity
-
-        product.save()
-
-        # Adjust store account balance based on invoice type
-        store_account = BankAccount.objects.get(user=self.request.user, account_type='store')
-        if invoice.invoice_type == 'sale':
-            store_account.balance += form.instance.amount
-        elif invoice.invoice_type == 'purchase':
-            store_account.balance -= form.instance.amount
-
-        store_account.save()
-
         # Update total amount of the invoice
         invoice.update_total_amount()
 
@@ -204,6 +185,22 @@ class InvoiceItemCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('invoice-detail', kwargs={'pk': self.kwargs['pk']})
+
+
+class InvoiceSubmitView(LoginRequiredMixin, DetailView):
+    model = Invoice
+    template_name = 'app/invoice_list.html'
+
+    def get_object(self, queryset=None):
+        invoice_pk = self.kwargs['pk']
+        return get_object_or_404(Invoice, pk=invoice_pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        invoice = self.get_object()
+        # اجرای پردازش فاکتور
+        InvoiceProcessor.process_invoice(invoice)
+        return context
 
 
 class CheckListView(LoginRequiredMixin, ListView):

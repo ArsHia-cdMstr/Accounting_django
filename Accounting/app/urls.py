@@ -5,10 +5,9 @@ from .views import (
     BankAccountListView, BankAccountCreateView,
     CustomerListView, CustomerCreateView,
     ProductListView, ProductCreateView,
-    InvoiceListView, InvoiceCreateView, InvoiceDetailView, InvoiceItemCreateView,
+    InvoiceListView, InvoiceCreateView, InvoiceDetailView, InvoiceItemCreateView,InvoiceSubmitView,
     CheckListView, CheckCreateView,
     UserSignup, UserLogin
-
 )
 from .views import UserSignup, UserLogin, PortfolioList, PortfolioCreate, PortfolioDelete
 from django.contrib.auth.views import LogoutView
@@ -33,6 +32,7 @@ urlpatterns = [
     path('invoices/', InvoiceListView.as_view(), name='invoice-list'),
     path('invoices/create/', InvoiceCreateView.as_view(), name='invoice-create'),
     path('invoices/<int:pk>/', InvoiceDetailView.as_view(), name='invoice-detail'),
+    path('invoices/submit/<int:pk>/', InvoiceSubmitView.as_view(), name='process-invoice'),
     path('invoices/items/create/<int:pk>/', InvoiceItemCreateView.as_view(), name='invoiceitem-create'),
     path('checks/', CheckListView.as_view(), name='check-list'),
     path('checks/create/', CheckCreateView.as_view(), name='check-create'),

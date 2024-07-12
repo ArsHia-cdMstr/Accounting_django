@@ -81,6 +81,7 @@ class Invoice(models.Model):
     date = models.DateField(auto_now_add=True)
     invoice_number = models.PositiveIntegerField(unique=True, blank=True, null=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    remaining_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if self.pk is None:
@@ -94,6 +95,10 @@ class Invoice(models.Model):
         self.total_amount = total if total else 0
         self.save(update_fields=['total_amount'])
 
+    def update_remaining_amount(self, amount):
+        self.remaining_amount = amount
+        self.save(update_fields=['remaining_amount'])
+
     def __str__(self):
         return f"{self.customer.name} - {self.invoice_type} - {self.date}"
 
@@ -103,11 +108,14 @@ class InvoiceItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    is_submitted = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         self.amount = self.product.price * self.quantity
         super().save(*args, **kwargs)
         self.invoice.update_total_amount()
+        self.invoice.update_remaining_amount(amount=self.amount)
+
 
     def __str__(self):
         return f"{self.product.name} - {self.quantity}"

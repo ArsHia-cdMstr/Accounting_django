@@ -61,6 +61,7 @@
                 </tbody>
             </table>
             <a href="{% url 'invoiceitem-create' invoice.id %}" class="btn btn-secondary mt-3">Add Item</a>
+            <a href="{% url 'process-invoice' invoice.id %}" class="btn btn-primary mt-3 submit-btn " >Submit Invoice</a>
         </div>
     </div>
 </div>
