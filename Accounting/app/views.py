@@ -188,6 +188,15 @@ class InvoiceItemCreateView(CreateView):
 
         product.save()
 
+        # Adjust store account balance based on invoice type
+        store_account = BankAccount.objects.get(user=self.request.user, account_type='store')
+        if invoice.invoice_type == 'sale':
+            store_account.balance += form.instance.amount
+        elif invoice.invoice_type == 'purchase':
+            store_account.balance -= form.instance.amount
+
+        store_account.save()
+
         # Update total amount of the invoice
         invoice.update_total_amount()
 

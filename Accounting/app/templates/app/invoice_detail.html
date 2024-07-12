@@ -7,53 +7,61 @@
 
 {% block content %}
 <div class="container mt-5">
-  <div class="card">
-    <div class="card-header text-center bg-primary text-white">
-      <h2>Invoice Details</h2>
-    </div>
-    <div class="card-body">
-      <table class="table table-bordered">
-        <tbody>
-          <tr>
-            <th>Invoice Number:</th>
-            <td>{{ invoice.invoice_number }}</td>
-          </tr>
-          <tr>
-            <th>Customer:</th>
-            <td>{{ invoice.customer.name }}</td>
-          </tr>
-          <tr>
-            <th>Date:</th>
-            <td>{{ invoice.date }}</td>
-          </tr>
-          <tr>
-            <th>Total Amount:</th>
-            <td>${{ invoice.total_amount }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="card">
 
-      <h4 class="mt-4">Items</h4>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
-          <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.amount }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <a href="{% url 'invoiceitem-create' invoice.id %}" class="btn btn-secondary mt-3">Add Item</a>
+        {% if invoice.invoice_type == 'sale' %}
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Sale Invoice</h2>
+        </div>
+        {% elif invoice.invoice_type == 'purchase' %}
+        <div class="card-header bg-danger text-white text-center">
+            <h2>Purchase Invoice</h2>
+        </div>
+        {% endif %}
+
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Invoice Number:</th>
+                        <td>{{ invoice.invoice_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Customer:</th>
+                        <td>{{ invoice.customer.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date:</th>
+                        <td>{{ invoice.date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Amount:</th>
+                        <td>${{ invoice.total_amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4 class="mt-4">Items</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'invoiceitem-create' invoice.id %}" class="btn btn-secondary mt-3">Add Item</a>
+        </div>
     </div>
-  </div>
 </div>
 {% endblock %}
