@@ -167,13 +167,30 @@ class InvoiceDetailView(LoginRequiredMixin, DetailView):
 
 class InvoiceItemCreateView(CreateView):
     model = InvoiceItem
-    fields = ['product', 'quantity']  # Exclude 'amount' since it's calculated automatically
+    fields = ['product', 'quantity']
     template_name = 'app/invoiceitem_form.html'
 
     def form_valid(self, form):
         invoice_pk = int(self.kwargs['pk'])
-        form.instance.invoice = get_object_or_404(Invoice, pk=invoice_pk)
+        invoice = get_object_or_404(Invoice, pk=invoice_pk)
+
+        form.instance.invoice = invoice
         response = super().form_valid(form)
+
+        # Decrease product quantity if invoice type is 'sale'
+        # Increase product quantity if invoice type is 'purchase'
+        product = form.instance.product
+
+        if invoice.invoice_type == 'sale':
+            product.quantity -= form.instance.quantity
+        elif invoice.invoice_type == 'purchase':
+            product.quantity += form.instance.quantity
+
+        product.save()
+
+        # Update total amount of the invoice
+        invoice.update_total_amount()
+
         return response
 
     def get_success_url(self):
