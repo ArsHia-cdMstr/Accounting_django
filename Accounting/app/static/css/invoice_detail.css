@@ -1,10 +1,10 @@
 /* invoice_detail.css */
 
-/* General Styles */
 body, html {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
 }
 
 .container {
@@ -13,71 +13,63 @@ body, html {
     padding: 20px;
 }
 
-/* Card Styles */
 .card {
     margin-top: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
 }
 
 .card-header {
-    background-color: #007bff; /* Standard Bootstrap blue */
-    background-color: #0056b3; /* Fallback color for better compatibility */
+    background-color: #4a90e2;
     color: #fff;
     border-radius: 10px 10px 0 0;
-    padding: 10px 15px;
+    padding: 15px 20px;
 }
 
 .card-body {
     padding: 20px;
+    background-color: #f7f9fc;
 }
 
-.card-body .row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
 }
 
-.card-body .font-weight-bold {
-    font-weight: bold;
-    color: #333;
-    margin-right: 10px;
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
 }
 
-.card-body .col-md-8 {
-    flex: 1;
-    color: #555;
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
 }
 
-.card-body h4 {
-    margin-top: 30px;
-    font-size: 24px;
-    color: #007bff;
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
 }
 
-.card-body .list-group {
-    margin-top: 10px;
+.table-bordered {
+    border: 1px solid #dee2e6;
 }
 
-.card-body .list-group-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f8f9fa;
-    margin-bottom: 10px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 18px;
-    color: #555;
-    transition: background-color 0.3s ease;
+.table-bordered th, .table-bordered td {
+    border: 1px solid #dee2e6;
 }
 
-.card-body .list-group-item:hover {
-    background-color: #e9ecef;
+.table-bordered thead th, .table-bordered thead td {
+    border-bottom-width: 2px;
 }
 
-/* Button Styles */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
 .btn-secondary {
     background-color: #6c757d;
     color: #fff;
@@ -85,13 +77,10 @@ body, html {
     border-radius: 5px;
     text-align: center;
     padding: 10px 20px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn-secondary:hover {
     background-color: #5a6268;
-}
-
-.card {
-    background-color: thistle;
+    transform: translateY(-2px);
 }

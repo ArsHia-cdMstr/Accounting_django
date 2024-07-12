@@ -33,7 +33,7 @@ urlpatterns = [
     path('invoices/', InvoiceListView.as_view(), name='invoice-list'),
     path('invoices/create/', InvoiceCreateView.as_view(), name='invoice-create'),
     path('invoices/<int:pk>/', InvoiceDetailView.as_view(), name='invoice-detail'),
-    path('invoices/items/create/', InvoiceItemCreateView.as_view(), name='invoiceitem-create'),
+    path('invoices/items/create/<int:pk>/', InvoiceItemCreateView.as_view(), name='invoiceitem-create'),
     path('checks/', CheckListView.as_view(), name='check-list'),
     path('checks/create/', CheckCreateView.as_view(), name='check-create'),
 ]

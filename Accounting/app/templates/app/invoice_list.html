@@ -7,21 +7,38 @@
 
 {% block content %}
 <div class="container mt-5">
-  <h2 class="text-center">Invoices</h2>
-  <div class="text-right mb-3">
-    <a href="{% url 'invoice-create' %}" class="btn btn-primary">Create Invoice</a>
+  <div class="card">
+    <div class="card-header text-center bg-primary text-white">
+      <h2>Invoices</h2>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Invoice Number</th>
+            <th>Customer</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Total Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in object_list %}
+          <tr>
+            <td>
+              {{ invoice.invoice_number }}
+            </td>
+            <td>{{ invoice.customer.name }}</td>
+            <td>{{ invoice.invoice_type|capfirst }}</td>
+            <td>{{ invoice.date }}</td>
+            <td>{{ invoice.total_amount }}</td>
+            <td><a href="{% url 'invoice-detail' pk=invoice.id %}" class="btn btn-primary">invoice detail</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{% url 'invoice-create' %}" class="btn btn-success mt-3">Create New Invoice</a>
+    </div>
   </div>
-  <ul class="list-group">
-    {% for invoice in invoices %}
-        <a href="{% url 'invoice-detail' invoice.id %}">
-            <li class="list-group-item">
-                <strong>Invoice Number:</strong> {{ invoice.invoice_number }}<br>
-                <strong>Customer:</strong> {{ invoice.customer.name }}<br>
-                <strong>Type:</strong> {{ invoice.invoice_type|capfirst }}<br>
-                <strong>Date:</strong> {{ invoice.date }}
-            </li>
-        </a>
-    {% endfor %}
-  </ul>
 </div>
 {% endblock %}

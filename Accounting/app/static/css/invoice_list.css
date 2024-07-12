@@ -1,10 +1,10 @@
 /* invoice_list.css */
 
-/* General Styles */
 body, html {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
 }
 
 .container {
@@ -13,52 +13,74 @@ body, html {
     padding: 20px;
 }
 
-/* Header Styles */
-h2 {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* List Styles */
-.list-group {
-    list-style-type: none;
-    padding: 0;
-}
-
-.list-group-item {
-    background-color: #f8f9fa;
-    margin-bottom: 10px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 18px;
-    color: #555;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.list-group-item:hover {
-    background-color: #e9ecef;
-    transform: scale(1.02);
-}
-
-.list-group-item:active {
-    background-color: #d3d3d3;
-}
-
-/* Link Styles */
-.btn {
-    display: inline-block;
+.card {
     margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.card-header {
+    background-color: #4a90e2;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    padding: 15px 20px;
+}
+
+.card-body {
+    padding: 20px;
+    background-color: #f7f9fc;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered thead th, .table-bordered thead td {
+    border-bottom-width: 2px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.btn-success {
+    background-color: #28a745;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     text-align: center;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.btn:hover {
-    background-color: #0056b3;
+.btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
 }

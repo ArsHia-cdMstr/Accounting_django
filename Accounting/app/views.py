@@ -16,6 +16,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import BankAccount, Customer, Product, Invoice, InvoiceItem, Check, Portfolio
 from .forms import BankAccountForm
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 
 class PortfolioCreate(LoginRequiredMixin, View):
@@ -160,17 +161,21 @@ class InvoiceDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['items'] = self.object.invoiceitem_set.all()
+        context['items'] = self.object.invoice_items.all()
         return context
 
 
-class InvoiceItemCreateView(LoginRequiredMixin, CreateView):
+class InvoiceItemCreateView(CreateView):
     model = InvoiceItem
-    fields = ['invoice', 'product', 'quantity']
+    fields = ['product', 'quantity']  # Exclude 'amount' since it's calculated automatically
     template_name = 'app/invoiceitem_form.html'
 
-    def get_success_url(self):
-        return reverse_lazy('invoice-detail', kwargs={'pk': self.object.invoice.pk})
+    def form_valid(self, form):
+        invoice_pk = int(self.kwargs['pk'])
+        form.instance.invoice = get_object_or_404(Invoice, pk=invoice_pk)
+        response = super().form_valid(form)
+        self.success_url = reverse_lazy('invoice-detail', kwargs={'pk': invoice_pk})
+        return response
 
 
 class CheckListView(LoginRequiredMixin, ListView):
