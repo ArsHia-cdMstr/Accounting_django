@@ -163,7 +163,7 @@ class Check(models.Model):
         return f"{self.bank_account} - {self.amount} - {self.date}"
 
 
-class transference(models.Model):
+class Transference(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     bank_account = models.ForeignKey(BankAccount, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

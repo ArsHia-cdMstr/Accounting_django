@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/check_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Transference List</h2>
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Your Transferences</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Bank Account</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transference in object_list %}
+                    <tr>
+                        <td>{{ transference.bank_account }}</td>
+                        <td>{{ transference.customer }}</td>
+                        <td>${{ transference.amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'transference-create' %}" class="btn btn-success mt-3">Create New transference</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

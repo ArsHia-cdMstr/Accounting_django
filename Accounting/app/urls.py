@@ -7,6 +7,7 @@ from .views import (
     ProductListView, ProductCreateView,
     InvoiceListView, InvoiceCreateView, InvoiceDetailView, InvoiceItemCreateView,InvoiceSubmitView,
     CheckListView, CheckCreateView,
+    TransferenceCreateView, TransferenceListView,
     UserSignup, UserLogin
 )
 from .views import UserSignup, UserLogin, PortfolioList, PortfolioCreate, PortfolioDelete
@@ -36,4 +37,6 @@ urlpatterns = [
     path('invoices/items/create/<int:pk>/', InvoiceItemCreateView.as_view(), name='invoiceitem-create'),
     path('checks/', CheckListView.as_view(), name='check-list'),
     path('checks/create/', CheckCreateView.as_view(), name='check-create'),
+    path('transference/', TransferenceListView.as_view(), name='transference-list'),
+    path('transference/create/', TransferenceCreateView.as_view(), name='transference-create'),
 ]

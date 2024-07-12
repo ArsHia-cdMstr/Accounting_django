@@ -13,7 +13,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import BankAccount, Customer, Product, Invoice, InvoiceItem, Check, Portfolio
+from .models import BankAccount, Customer, Product, Invoice, InvoiceItem, Check, Portfolio, Transference
 from .forms import BankAccountForm, CheckForm
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
@@ -229,4 +229,33 @@ class CheckCreateView(LoginRequiredMixin, CreateView):
             return super().form_valid(form)
         else:
             form.add_error(None, 'amount of check is greater than balance of account')
+            return self.form_invalid(form)
+
+
+class TransferenceListView(LoginRequiredMixin, ListView):
+    model = Transference
+    template_name = 'app/transference_list.html'
+
+    def get_queryset(self):
+        return Transference.objects.filter(user=self.request.user)
+
+
+class TransferenceCreateView(LoginRequiredMixin, CreateView):
+    model = Transference
+    fields = ['bank_account', 'customer', 'amount']
+    template_name = 'app/transference_form.html'
+    success_url = reverse_lazy('transference-list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+
+        # Retrieve the bank account and deduct the amount
+        bank_account = form.instance.bank_account
+        amount = form.instance.amount
+        if bank_account.balance >= amount:
+            bank_account.balance -= amount
+            bank_account.save()
+            return super().form_valid(form)
+        else:
+            form.add_error(None, 'amount of transference is greater than balance of account')
             return self.form_invalid(form)
