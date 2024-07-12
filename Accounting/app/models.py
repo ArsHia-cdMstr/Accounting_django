@@ -90,7 +90,7 @@ class Invoice(models.Model):
         super().save(*args, **kwargs)
 
     def update_total_amount(self):
-        total = self.invoiceitem_set.aggregate(total=Sum('amount'))['total']
+        total = self.invoice_items.aggregate(total=Sum('amount'))['total']
         self.total_amount = total if total else 0
         self.save(update_fields=['total_amount'])
 

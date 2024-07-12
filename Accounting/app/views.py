@@ -174,8 +174,10 @@ class InvoiceItemCreateView(CreateView):
         invoice_pk = int(self.kwargs['pk'])
         form.instance.invoice = get_object_or_404(Invoice, pk=invoice_pk)
         response = super().form_valid(form)
-        self.success_url = reverse_lazy('invoice-detail', kwargs={'pk': invoice_pk})
         return response
+
+    def get_success_url(self):
+        return reverse_lazy('invoice-detail', kwargs={'pk': self.kwargs['pk']})
 
 
 class CheckListView(LoginRequiredMixin, ListView):
