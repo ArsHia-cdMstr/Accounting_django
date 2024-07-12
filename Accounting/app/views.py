@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import BankAccount, Customer, Product, Invoice, InvoiceItem, Check, Portfolio
-from .forms import BankAccountForm
+from .forms import BankAccountForm, CheckForm
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from .logic import InvoiceProcessor
@@ -213,10 +213,20 @@ class CheckListView(LoginRequiredMixin, ListView):
 
 class CheckCreateView(LoginRequiredMixin, CreateView):
     model = Check
-    fields = ['bank_account', 'customer', 'amount', 'date']
+    form_class = CheckForm
     template_name = 'app/check_form.html'
     success_url = reverse_lazy('check-list')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+
+        # Retrieve the bank account and deduct the amount
+        bank_account = form.instance.bank_account
+        amount = form.instance.amount
+        if bank_account.balance >= amount:
+            bank_account.balance -= amount
+            bank_account.save()
+            return super().form_valid(form)
+        else:
+            form.add_error(None, 'amount of check is greater than balance of account')
+            return self.form_invalid(form)

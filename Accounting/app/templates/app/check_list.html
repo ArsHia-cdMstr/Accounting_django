@@ -1,0 +1,40 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/check_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Check List</h2>
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Your Checks</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Bank Account</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for check in object_list %}
+                    <tr>
+                        <td>{{ check.bank_account }}</td>
+                        <td>{{ check.customer }}</td>
+                        <td>${{ check.amount }}</td>
+                        <td>{{ check.date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'check-create' %}" class="btn btn-success mt-3">Create New Check</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

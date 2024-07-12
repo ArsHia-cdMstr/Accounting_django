@@ -1,5 +1,5 @@
 from django import forms
-from .models import BankAccount
+from .models import BankAccount, Check
 
 
 class BankAccountForm(forms.ModelForm):
@@ -19,3 +19,13 @@ class BankAccountForm(forms.ModelForm):
                 raise forms.ValidationError('You already have an account with type "store".')
         return account_type
 
+
+# forms.py
+
+class CheckForm(forms.ModelForm):
+    class Meta:
+        model = Check
+        fields = ['bank_account', 'customer', 'amount', 'date']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }

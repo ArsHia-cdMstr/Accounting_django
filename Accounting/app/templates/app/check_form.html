@@ -1,24 +1,60 @@
 {% extends 'app/base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block extra_css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/check_form.css' %}">
+<link rel="stylesheet" href="{% static 'css/check_form.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="form-container">
-    <h2>Create Check</h2>
-    <form method="post">
-        {% csrf_token %}
-        <label for="id_bank_account">Bank Account:</label>
-        {{ form.bank_account }}
-        <label for="id_customer">Customer:</label>
-        {{ form.customer }}
-        <label for="id_amount">Amount:</label>
-        {{ form.amount }}
-        <label for="id_date">Date:</label>
-        {{ form.date }}
-        <button type="submit">Save</button>
-    </form>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Create New Check</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_bank_account">Bank Account:</label>
+                    {{ form.bank_account|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    <label for="id_customer">Customer:</label>
+                    {{ form.customer|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    <label for="id_amount">Amount:</label>
+                    {{ form.amount|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    <label for="id_date">Date:</label>
+                    {{ form.date|add_class:"form-control" }}
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Save</button>
+                <a href="{% url 'check-list' %}" class="btn btn-secondary mt-3">Cancel</a>
+            </form>
+        </div>
+    </div>
 </div>
+
+{% if form.non_field_errors %}
+<div class="modal fade show" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+            </div>
+            <div class="modal-body">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'check-create' %}" class="btn btn-secondary close-btn">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

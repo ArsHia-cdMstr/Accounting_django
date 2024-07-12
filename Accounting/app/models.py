@@ -50,6 +50,17 @@ class BankAccount(models.Model):
         return f"{self.user.username} - {self.account_type}"
 
 
+# class StoreAccountHistory(models.Model):
+#     store_account = models.ForeignKey(BankAccount, on_delete=models.CASCADE)
+#     balance_change = models.DecimalField(max_digits=10, decimal_places=2)
+#     date_changed = models.DateTimeField(auto_now_add=True)
+#
+#     # Add more fields as needed for history tracking
+#
+#     def __str__(self):
+#         return f"History of {self.store_account} changed on {self.date_changed}"
+#
+
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
@@ -67,6 +78,17 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+#
+#
+# class ProductHistory(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     quantity_change = models.IntegerField()
+#     date_changed = models.DateTimeField(auto_now_add=True)
+#
+#     # Add more fields as needed for history tracking
+#
+#     def __str__(self):
+#         return f"History of {self.product} changed on {self.date_changed}"
 
 
 class Invoice(models.Model):
@@ -116,9 +138,18 @@ class InvoiceItem(models.Model):
         self.invoice.update_total_amount()
         self.invoice.update_remaining_amount(amount=self.amount)
 
-
     def __str__(self):
         return f"{self.product.name} - {self.quantity}"
+#
+#
+# class InvoiceHistory(models.Model):
+#     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+#     date_created = models.DateTimeField(auto_now_add=True)
+#
+#     # Add more fields as needed for history tracking
+#
+#     def __str__(self):
+#         return f"History of {self.invoice} created on {self.date_created}"
 
 
 class Check(models.Model):
@@ -127,6 +158,16 @@ class Check(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
+
+    def __str__(self):
+        return f"{self.bank_account} - {self.amount} - {self.date}"
+
+
+class transference(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    bank_account = models.ForeignKey(BankAccount, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"{self.bank_account} - {self.amount} - {self.date}"
