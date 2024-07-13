@@ -13,7 +13,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import BankAccount, Customer, Product, Invoice, InvoiceItem, Check, Portfolio, Transference
+from .models import BankAccount, Customer, Product, Invoice, InvoiceItem, Check, Portfolio, Transference, ProductHistory
 from .forms import BankAccountForm, CheckForm
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
@@ -118,7 +118,6 @@ class BankAccountDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-
 class CustomerCreateView(LoginRequiredMixin, CreateView):
     model = Customer
     fields = ['name', 'email']
@@ -147,6 +146,16 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'app/product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product_history'] = ProductHistory.objects.filter(product=self.get_object()).order_by('-date_changed')
+        return context
 
 
 class InvoiceListView(LoginRequiredMixin, ListView):

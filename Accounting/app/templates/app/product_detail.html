@@ -1,0 +1,43 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{{ object.name }} - Product Details</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Price:</strong> ${{ object.price }}</p>
+            <p><strong>Quantity:</strong> {{ object.quantity }}</p>
+            
+            <h5 class="mt-4">Product History</h5>
+            {% if product_history %}
+            <table class="table table-bordered mt-3">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Quantity Change</th>
+                        <th>Remaining Quantity</th>
+                        <th>Date Changed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for history in product_history %}
+                    <tr>
+                        <td>{{ history.quantity_change }}</td>
+                        <td>{{ history.remaining_quantity }}</td>
+                        <td>{{ history.date_changed }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info mt-3" role="alert">
+                No history available for this product.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -10,11 +10,13 @@
   <h2>Products</h2>
   <ul class="list-group">
     {% for product in object_list %}
-    <li class="list-group-item">
-      <span class="product-name">{{ product.name }}</span>
-      <span class="product-price">Price: ${{ product.price }}</span>
-      <span class="product-quantity">Quantity: {{ product.quantity }}</span>
-    </li>
+    <a href="{% url 'product-detail' product.pk %}" class="text-white">
+        <li class="list-group-item">
+          <span class="product-name">{{ product.name }}</span>
+          <span class="product-price">Price: ${{ product.price }}</span>
+          <span class="product-quantity">Quantity: {{ product.quantity }}</span>
+        </li>
+    </a>
     {% empty %}
     <li class="list-group-item">No products available</li>
     {% endfor %}

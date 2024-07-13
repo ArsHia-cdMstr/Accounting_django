@@ -4,8 +4,8 @@ from django.urls import path
 from .views import (
     BankAccountListView, BankAccountCreateView, BankAccountDetailView,
     CustomerListView, CustomerCreateView,
-    ProductListView, ProductCreateView,
-    InvoiceListView, InvoiceCreateView, InvoiceDetailView, InvoiceItemCreateView,InvoiceSubmitView,
+    ProductListView, ProductCreateView, ProductDetailView,
+    InvoiceListView, InvoiceCreateView, InvoiceDetailView, InvoiceItemCreateView, InvoiceSubmitView,
     CheckListView, CheckCreateView,
     TransferenceCreateView, TransferenceListView,
     UserSignup, UserLogin
@@ -23,7 +23,6 @@ urlpatterns = [
     path('pfl-create/', PortfolioCreate.as_view(), name='pfl-create'),
     path('pfl-delete/pk=<int:pk>', PortfolioDelete.as_view(), name='pfl-delete'),
 
-
     path('bankaccounts/', BankAccountListView.as_view(), name='bankaccount-list'),
     path('bankaccounts/<int:pk>/', BankAccountDetailView.as_view(), name='bankaccount-detail'),
     path('bankaccounts/create/', BankAccountCreateView.as_view(), name='bankaccount-create'),
@@ -31,6 +30,7 @@ urlpatterns = [
     path('customers/create/', CustomerCreateView.as_view(), name='customer-create'),
     path('products/', ProductListView.as_view(), name='product-list'),
     path('products/create/', ProductCreateView.as_view(), name='product-create'),
+    path('product/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
     path('invoices/', InvoiceListView.as_view(), name='invoice-list'),
     path('invoices/create/', InvoiceCreateView.as_view(), name='invoice-create'),
     path('invoices/<int:pk>/', InvoiceDetailView.as_view(), name='invoice-detail'),
