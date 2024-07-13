@@ -2,7 +2,7 @@
 
 from django.urls import path
 from .views import (
-    BankAccountListView, BankAccountCreateView,
+    BankAccountListView, BankAccountCreateView, BankAccountDetailView,
     CustomerListView, CustomerCreateView,
     ProductListView, ProductCreateView,
     InvoiceListView, InvoiceCreateView, InvoiceDetailView, InvoiceItemCreateView,InvoiceSubmitView,
@@ -25,6 +25,7 @@ urlpatterns = [
 
 
     path('bankaccounts/', BankAccountListView.as_view(), name='bankaccount-list'),
+    path('bankaccounts/<int:pk>/', BankAccountDetailView.as_view(), name='bankaccount-detail'),
     path('bankaccounts/create/', BankAccountCreateView.as_view(), name='bankaccount-create'),
     path('customers/', CustomerListView.as_view(), name='customer-list'),
     path('customers/create/', CustomerCreateView.as_view(), name='customer-create'),

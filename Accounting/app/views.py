@@ -108,6 +108,17 @@ class CustomerListView(LoginRequiredMixin, ListView):
         return Customer.objects.filter(user=self.request.user)
 
 
+class BankAccountDetailView(LoginRequiredMixin, DetailView):
+    model = BankAccount
+    template_name = 'app/bankaccount_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['account_history'] = self.get_object().account_history.all()
+        return context
+
+
+
 class CustomerCreateView(LoginRequiredMixin, CreateView):
     model = Customer
     fields = ['name', 'email']

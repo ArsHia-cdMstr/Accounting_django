@@ -13,17 +13,6 @@ class Portfolio(models.Model):
         return self.name
 
 
-class Transaction(models.Model):
-    journal_list = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    trans_name = models.CharField(max_length=30)
-    trans_type = models.CharField(max_length=3)
-    amount = models.IntegerField()
-    date = models.DateField()
-
-    def __str__(self):
-        return self.trans_name
-
-
 class BankAccount(models.Model):
     ACCOUNT_TYPES = (
         ('savings', 'Savings'),
@@ -39,27 +28,35 @@ class BankAccount(models.Model):
     account_number = models.PositiveIntegerField(unique=True, blank=True, null=True)
 
     def save(self, *args, **kwargs):
+        initial_balance = None
+        if self.pk is not None:
+            initial_balance = BankAccount.objects.get(pk=self.pk).balance
+
+        super().save(*args, **kwargs)
+
         if self.pk is None:
-            super().save(*args, **kwargs)
             self.account_number = self.id + 1000
-            self.save(update_fields=['account_number'])
-        else:
-            super().save(*args, **kwargs)
+            super().save(update_fields=['account_number'])
+
+        balance_change = self.balance - initial_balance if initial_balance is not None else self.balance
+        AccountHistory.objects.create(
+            mother_account=self,
+            balance_change=balance_change,
+            remaining_balance=self.balance
+        )
 
     def __str__(self):
         return f"{self.user.username} - {self.account_type}"
 
 
-# class StoreAccountHistory(models.Model):
-#     store_account = models.ForeignKey(BankAccount, on_delete=models.CASCADE)
-#     balance_change = models.DecimalField(max_digits=10, decimal_places=2)
-#     date_changed = models.DateTimeField(auto_now_add=True)
-#
-#     # Add more fields as needed for history tracking
-#
-#     def __str__(self):
-#         return f"History of {self.store_account} changed on {self.date_changed}"
-#
+class AccountHistory(models.Model):
+    mother_account = models.ForeignKey(BankAccount, related_name="account_history", on_delete=models.CASCADE)
+    balance_change = models.DecimalField(max_digits=10, decimal_places=2)
+    remaining_balance = models.DecimalField(max_digits=10, decimal_places=2)
+    date_changed = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"History of {self.mother_account} changed on {self.date_changed}"
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)

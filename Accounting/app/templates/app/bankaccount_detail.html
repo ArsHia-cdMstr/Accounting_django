@@ -1,0 +1,58 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{{ object.user.username }} - {{ object.get_account_type_display }} Account</h4>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Bank Name:</strong> {{ object.bank_name }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Account Number:</strong> {{ object.account_number }}</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Balance:</strong> ${{ object.balance }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Account Type:</strong> {{ object.get_account_type_display }}</p>
+                </div>
+            </div>
+            
+            <h5 class="mt-4">Account History</h5>
+            {% if account_history %}
+            <table class="table table-bordered mt-3">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Balance Change</th>
+                        <th>Remaining Balance</th>
+                        <th>Date Changed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for history in account_history %}
+                    <tr>
+                        <td>${{ history.balance_change }}</td>
+                        <td>${{ history.remaining_balance }}</td>
+                        <td>{{ history.date_changed }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info mt-3" role="alert">
+                No history available for this account.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

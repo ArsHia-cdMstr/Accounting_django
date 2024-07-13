@@ -10,14 +10,16 @@
   <h2 class="text-center">Bank Accounts</h2>
   <ul class="list-group">
     {% for account in object_list %}
-      <li class="list-group-item {% if account.account_type == 'store' %}list-group-item-success{% endif %}">
-        <strong>Account ID:</strong> {{ account.account_number }}<br>
-        <strong>Bank Name:</strong> {{ account.bank_name }}<br>
-        <strong>Account Type:</strong> {{ account.account_type|capfirst }}<br>
-        <strong>Balance:</strong> ${{ account.balance }}
-      </li>
+        <a href="{% url 'bankaccount-detail' account.pk %}" class="text-white">
+          <li class="list-group-item {% if account.account_type == 'store' %}list-group-item-success{% endif %}">
+            <strong>Account ID:</strong> {{ account.account_number }}<br>
+            <strong>Bank Name:</strong> {{ account.bank_name }}<br>
+            <strong>Account Type:</strong> {{ account.account_type|capfirst }}<br>
+            <strong>Balance:</strong> ${{ account.balance }}
+          </li>
+        </a>
     {% endfor %}
   </ul>
-  <a href="{% url 'bankaccount-create' %}" class="btn btn-primary mt-3">Create New Account</a>
+  <a href="{% url 'bankaccount-create' %}" class="btn btn-primary new-account-btn mt-3">Create New Account</a>
 </div>
 {% endblock %}
